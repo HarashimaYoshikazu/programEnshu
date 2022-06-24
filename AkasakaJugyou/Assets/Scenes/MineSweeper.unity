@@ -244,8 +244,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 92.42651, y: 8}
-  m_SizeDelta: {x: -1224.794, y: -500}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &991033466
 MonoBehaviour:
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -321,6 +321,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e2330a84622004e9d16efa74297201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rows: 10
+  _colums: 10
+  _mineCount: 99
   _cellPrefab: {fileID: 0}
   _gridLayoutGroup: {fileID: 991033466}
 --- !u!1 &1148279222
