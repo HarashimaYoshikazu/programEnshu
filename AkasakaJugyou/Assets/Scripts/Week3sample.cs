@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Sample : MonoBehaviour, IPointerClickHandler
+public class Week3sample : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
     private int _rows = 5;
