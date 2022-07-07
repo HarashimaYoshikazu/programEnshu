@@ -323,7 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rows: 10
   _colums: 10
-  _mineCount: 4
+  _mineCount: 5
   _cellPrefab: {fileID: 0}
   _gridLayoutGroup: {fileID: 991033466}
 --- !u!1 &1148279222
