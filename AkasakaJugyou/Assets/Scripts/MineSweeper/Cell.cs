@@ -14,9 +14,14 @@ public class Cell : MonoBehaviour
     {
         get => _cellType;
 
-        set { _cellType = value;
-            SelectCellType();
-            } 
+        set
+        {
+            if (_cellType!=CellType.Mine)
+            {
+                _cellType = value;
+                SelectCellType();
+            }           
+        }
     }
 
 
@@ -56,7 +61,7 @@ public class Cell : MonoBehaviour
 
 public enum CellType
 {
-    Mine =-1,//地雷セル
+    Mine = -1,//地雷セル
 
     None = 0,//何もないセル
     One = 1,
@@ -66,5 +71,5 @@ public enum CellType
     Five = 5,
     Six = 6,
     Seven = 7,
-    Eight = 8    
+    Eight = 8
 }

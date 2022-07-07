@@ -11,7 +11,7 @@ public class Minesweeper : MonoBehaviour
     [SerializeField]
     int _colums = 10;
 
-    [SerializeField,Range(0,99)]
+    [SerializeField, Range(0, 99)]
     int _mineCount = 5;
 
     [Header("リソース")]
@@ -52,6 +52,7 @@ public class Minesweeper : MonoBehaviour
             else
             {
                 _cells[row, col].CellTypeValue = CellType.Mine;
+                SetNumberAroundMine(row,col);
                 counts++;
             }
 
@@ -77,23 +78,40 @@ public class Minesweeper : MonoBehaviour
         }
     }
 
-    private void SetNumber(int row,int col)
+    private void SetNumberAroundMine(int row, int col)
     {
-        if (row>0)
+        if (row > 0)
         {
-            _cells[row - 1, col].CellTypeValue++;
-            if (col>0)
+            _cells[row - 1, col].CellTypeValue++;//左真ん中
+            if (col > 0)
             {
-                _cells[row - 1, col-1].CellTypeValue++;
+                _cells[row - 1, col - 1].CellTypeValue++;//左下
             }
-            else if(col<_colums)
+            if (col < _colums-1)
             {
-                _cells[row - 1, col + 1].CellTypeValue++;
+                _cells[row - 1, col + 1].CellTypeValue++;//左上
             }
         }
-        else if (row<_rows)
+        if (row < _rows-1)
         {
-            
+            _cells[row + 1, col].CellTypeValue++; //右真ん中
+            if (col > 0)
+            {
+                _cells[row + 1, col - 1].CellTypeValue++;//右下
+            }
+            if (col < _colums-1)
+            {
+                _cells[row + 1, col + 1].CellTypeValue++;//右上
+            }
+        }
+
+        if (col>0)
+        {
+            _cells[row, col - 1].CellTypeValue++; //真ん中上
+        }
+        if (col<_colums-1)
+        {
+            _cells[row, col + 1].CellTypeValue++;　//真ん中下
         }
     }
 }
