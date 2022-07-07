@@ -260,17 +260,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 469
     m_Right: 0
-    m_Top: 0
+    m_Top: 47
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 50, y: 50}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 0, y: 0}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Constraint: 1
+  m_ConstraintCount: 3
 --- !u!114 &991033467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,11 +321,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e2330a84622004e9d16efa74297201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rows: 10
-  _colums: 10
-  _mineCount: 5
+  _rows: 3
+  _colums: 3
+  _mineCount: 1
   _cellPrefab: {fileID: 0}
   _gridLayoutGroup: {fileID: 991033466}
+  _gameEndPanel: {fileID: 0}
 --- !u!1 &1148279222
 GameObject:
   m_ObjectHideFlags: 0

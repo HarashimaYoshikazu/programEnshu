@@ -24,11 +24,35 @@ public class Minesweeper : MonoBehaviour
 
     Cell[,] _cells = null;
 
+    [SerializeField]
+    GameObject _gameEndPanel = null;
+
+    int _count = 0;
+    public int Count
+    {
+        get { return _count; }
+        set
+        {
+            if (value>=(_rows*_colums)-_mineCount)
+            {
+                OnGameEnd("クリア");
+            }
+            else
+            {
+                _count = value;
+            }
+        }
+    }
+
     private void Awake()
     {
         if (!_cellPrefab)
         {
             _cellPrefab = Resources.Load<Cell>("cell");
+        }
+        if (!_gameEndPanel)
+        {
+            _gameEndPanel = Resources.Load<GameObject>("GameOverPanel");
         }
     }
 
@@ -65,7 +89,7 @@ public class Minesweeper : MonoBehaviour
     {
         _gridLayoutGroup.constraint
                    = GridLayoutGroup.Constraint.FixedColumnCount;
-        _gridLayoutGroup.constraintCount = 10;
+        _gridLayoutGroup.constraintCount = _colums;
 
         _cells = new Cell[_rows, _colums];
 
@@ -114,5 +138,11 @@ public class Minesweeper : MonoBehaviour
         {
             _cells[row, col + 1].CellTypeValue++;　//真ん中下
         }
+    }
+
+    public void OnGameEnd(string gameEndText)
+    {
+        var go = Instantiate(_gameEndPanel,_gridLayoutGroup.transform.parent);
+        go.GetComponentInChildren<Text>().text = gameEndText;
     }
 }

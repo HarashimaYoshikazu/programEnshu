@@ -13,6 +13,8 @@ public class Cell : MonoBehaviour, IPointerDownHandler
 
     [SerializeField]
     CellType _cellType = CellType.None;
+
+    Minesweeper _minesweeper;
     public CellType CellTypeValue
     {
         get => _cellType;
@@ -40,6 +42,7 @@ public class Cell : MonoBehaviour, IPointerDownHandler
         {
             _hideObject = GetComponentInChildren<Image>().gameObject;
         }
+        _minesweeper = FindObjectOfType<Minesweeper>();
     }
 
     private void OnValidate()
@@ -73,10 +76,23 @@ public class Cell : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        OpenCell();
+    }
+
+    private void OpenCell()
+    {
         if (isHide)
         {
             _hideObject.SetActive(false);
             isHide = false;
+        }
+        if (_cellType==CellType.Mine)
+        {
+            _minesweeper.OnGameEnd("”š”­");
+        }
+        else
+        {
+            _minesweeper.Count++;
         }
     }
 }
