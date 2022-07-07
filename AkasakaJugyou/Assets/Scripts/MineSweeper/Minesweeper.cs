@@ -27,6 +27,9 @@ public class Minesweeper : MonoBehaviour
     [SerializeField]
     GameObject _gameEndPanel = null;
 
+    bool isInit = false;
+    public bool IsInit => isInit;
+
     int _count = 0;
     public int Count
     {
@@ -59,18 +62,20 @@ public class Minesweeper : MonoBehaviour
     private void Start()
     {
         CreateCells();
-        SetMine();
-
     }
 
-    private void SetMine()
+    public void SetMine(int firstRow,int firstCol)
     {
         int counts = 0;
         while (counts < _mineCount)
         {
             int row = Random.Range(0, _rows);
             int col = Random.Range(0, _colums);
-            if (_cells[row, col].CellTypeValue == CellType.Mine)
+            if (row==firstRow && col == firstCol)
+            {
+                continue;
+            }
+            else if (_cells[row, col].CellTypeValue == CellType.Mine)
             {
                 continue;
             }
@@ -80,9 +85,8 @@ public class Minesweeper : MonoBehaviour
                 SetNumberAroundMine(row,col);
                 counts++;
             }
-
-
         }
+        isInit = true;
     }
 
     private void CreateCells()
@@ -98,6 +102,7 @@ public class Minesweeper : MonoBehaviour
             for (var c = 0; c < _colums; c++)
             {
                 var cell = Instantiate(_cellPrefab, _gridLayoutGroup.transform);
+                cell.CellIndex = new Vector2Int(r,c);
                 _cells[r, c] = cell;
             }
         }

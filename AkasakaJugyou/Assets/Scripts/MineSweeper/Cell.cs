@@ -21,14 +21,20 @@ public class Cell : MonoBehaviour, IPointerDownHandler
 
         set
         {
-            if (_cellType!=CellType.Mine)
+            if (_cellType != CellType.Mine)
             {
                 _cellType = value;
                 SelectCellType();
-            }           
+            }
         }
     }
 
+    Vector2Int _cellIndex = new Vector2Int();
+    public Vector2Int CellIndex
+    {
+        get => _cellIndex;
+        set => _cellIndex = value;
+    }
     bool isHide = true;
 
 
@@ -76,6 +82,10 @@ public class Cell : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!_minesweeper.IsInit)
+        {
+            _minesweeper.SetMine(_cellIndex.x,_cellIndex.y);
+        }
         OpenCell();
     }
 
@@ -86,7 +96,7 @@ public class Cell : MonoBehaviour, IPointerDownHandler
             _hideObject.SetActive(false);
             isHide = false;
         }
-        if (_cellType==CellType.Mine)
+        if (_cellType == CellType.Mine)
         {
             _minesweeper.OnGameEnd("”š”­");
         }

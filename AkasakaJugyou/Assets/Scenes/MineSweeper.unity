@@ -323,7 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rows: 3
   _colums: 3
-  _mineCount: 1
+  _mineCount: 8
   _cellPrefab: {fileID: 0}
   _gridLayoutGroup: {fileID: 991033466}
   _gameEndPanel: {fileID: 0}
