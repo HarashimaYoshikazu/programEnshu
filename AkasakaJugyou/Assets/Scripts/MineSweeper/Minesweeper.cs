@@ -36,7 +36,7 @@ public class Minesweeper : MonoBehaviour
         get { return _count; }
         set
         {
-            if (value>=(_rows*_colums)-_mineCount)
+            if (value >= (_rows * _colums) - _mineCount)
             {
                 OnGameEnd("クリア");
             }
@@ -64,14 +64,14 @@ public class Minesweeper : MonoBehaviour
         CreateCells();
     }
 
-    public void SetMine(int firstRow,int firstCol)
+    public void SetMine(int firstRow, int firstCol)
     {
         int counts = 0;
         while (counts < _mineCount)
         {
             int row = Random.Range(0, _rows);
             int col = Random.Range(0, _colums);
-            if (row==firstRow && col == firstCol)
+            if (row == firstRow && col == firstCol)
             {
                 continue;
             }
@@ -82,7 +82,7 @@ public class Minesweeper : MonoBehaviour
             else
             {
                 _cells[row, col].CellTypeValue = CellType.Mine;
-                SetNumberAroundMine(row,col);
+                SetNumberAroundMine(row, col);
                 counts++;
             }
         }
@@ -102,7 +102,7 @@ public class Minesweeper : MonoBehaviour
             for (var c = 0; c < _colums; c++)
             {
                 var cell = Instantiate(_cellPrefab, _gridLayoutGroup.transform);
-                cell.CellIndex = new Vector2Int(r,c);
+                cell.CellIndex = new Vector2Int(r, c);
                 _cells[r, c] = cell;
             }
         }
@@ -117,29 +117,29 @@ public class Minesweeper : MonoBehaviour
             {
                 _cells[row - 1, col - 1].CellTypeValue++;//左下
             }
-            if (col < _colums-1)
+            if (col < _colums - 1)
             {
                 _cells[row - 1, col + 1].CellTypeValue++;//左上
             }
         }
-        if (row < _rows-1)
+        if (row < _rows - 1)
         {
             _cells[row + 1, col].CellTypeValue++; //右真ん中
             if (col > 0)
             {
                 _cells[row + 1, col - 1].CellTypeValue++;//右下
             }
-            if (col < _colums-1)
+            if (col < _colums - 1)
             {
                 _cells[row + 1, col + 1].CellTypeValue++;//右上
             }
         }
 
-        if (col>0)
+        if (col > 0)
         {
             _cells[row, col - 1].CellTypeValue++; //真ん中上
         }
-        if (col<_colums-1)
+        if (col < _colums - 1)
         {
             _cells[row, col + 1].CellTypeValue++;　//真ん中下
         }
@@ -147,7 +147,76 @@ public class Minesweeper : MonoBehaviour
 
     public void OnGameEnd(string gameEndText)
     {
-        var go = Instantiate(_gameEndPanel,_gridLayoutGroup.transform.parent);
+        var go = Instantiate(_gameEndPanel, _gridLayoutGroup.transform.parent);
         go.GetComponentInChildren<Text>().text = gameEndText;
+    }
+
+
+    /**
+     隣接セル判定のみサイトを参考にしました（コピペではない）
+     **/
+
+    private Cell[] GetAdjoinCells(int r, int c)
+    {
+        var cells = new List<Cell>();
+
+        var isTop = r == 0;
+        var isButtom = r == _colums - 1;
+        var isLeft = c == 0;
+        var isRight = c == _rows - 1;
+
+        // 左上
+        if (!isTop && !isLeft)
+        {
+            cells.Add(_cells[r - 1, c - 1]);
+        }
+        // 上
+        if (!isTop)
+        {
+            cells.Add(_cells[r - 1, c]);
+        }
+        // 右上
+        if (!isTop && !isRight)
+        {
+            cells.Add(_cells[r - 1, c + 1]);
+        }
+        // 右
+        if (!isRight)
+        {
+            cells.Add(_cells[r, c + 1]);
+        }
+        // 右下
+        if (!isButtom && !isRight)
+        {
+            cells.Add(_cells[r + 1, c + 1]);
+        }
+        // 下
+        if (!isButtom)
+        {
+            cells.Add(_cells[r + 1, c]);
+        }
+        // 左下
+        if (!isButtom && !isLeft)
+        {
+            cells.Add(_cells[r + 1, c - 1]);
+        }
+        // 左の判定
+        if (!isLeft)
+        {
+            cells.Add(_cells[r, c - 1]);
+        }
+
+        return cells.ToArray();
+    }
+
+    public void OpenAdjoinCells(int r, int c)
+    {
+        foreach (var cell in GetAdjoinCells(r, c))
+        {
+            if (cell.IsHide)
+            {
+                cell.OpenCell();
+            }
+        }
     }
 }

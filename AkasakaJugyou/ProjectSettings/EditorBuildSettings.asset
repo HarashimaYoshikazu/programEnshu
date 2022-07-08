@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MineSweeper.unity
+    guid: 35f8a8515ca086a47970049a9f824bfa
   m_configObjects: {}

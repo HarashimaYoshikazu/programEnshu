@@ -36,6 +36,7 @@ public class Cell : MonoBehaviour, IPointerDownHandler
         set => _cellIndex = value;
     }
     bool isHide = true;
+    public bool IsHide => isHide;
 
 
     void Awake()
@@ -89,12 +90,18 @@ public class Cell : MonoBehaviour, IPointerDownHandler
         OpenCell();
     }
 
-    private void OpenCell()
+    public void OpenCell()
     {
         if (isHide)
         {
-            _hideObject.SetActive(false);
+            _hideObject.SetActive(false);            
             isHide = false;
+            if (_cellType==CellType.None)
+            {
+                _minesweeper.OpenAdjoinCells(_cellIndex.x, _cellIndex.y);
+            }
+            
+
         }
         if (_cellType == CellType.Mine)
         {

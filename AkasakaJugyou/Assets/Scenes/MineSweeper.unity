@@ -321,9 +321,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e2330a84622004e9d16efa74297201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rows: 3
-  _colums: 3
-  _mineCount: 8
+  _rows: 10
+  _colums: 10
+  _mineCount: 5
   _cellPrefab: {fileID: 0}
   _gridLayoutGroup: {fileID: 991033466}
   _gameEndPanel: {fileID: 0}
