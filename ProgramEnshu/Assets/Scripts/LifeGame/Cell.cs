@@ -42,7 +42,7 @@ namespace LifeGame
             ChangeState();
         }
 
-        void ChangeState()
+        public void ChangeState()
         {
             IsAlive = !IsAlive;//”½“]
         }
