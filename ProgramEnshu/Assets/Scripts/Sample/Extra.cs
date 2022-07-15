@@ -8,7 +8,6 @@ public class Extra : MonoBehaviour
     [SerializeField]
     int arrayLength = 5;
     GameObject[] gos;
-    int currentred = 0;
     bool[] isRed;
     private void Start()
     {

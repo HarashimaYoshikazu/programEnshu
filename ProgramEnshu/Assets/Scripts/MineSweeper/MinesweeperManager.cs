@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Minesweeper;
 
-public class Minesweeper : MonoBehaviour
+public class MinesweeperManager : MonoBehaviour
 {
     [Header("ƒQ[ƒ€‚Ìİ’è")]
     [SerializeField]
