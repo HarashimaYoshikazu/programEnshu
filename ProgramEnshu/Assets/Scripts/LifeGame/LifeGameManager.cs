@@ -13,8 +13,6 @@ public class LifeGameManager : MonoBehaviour
     [SerializeField, Tooltip("セルの列数"), Range(1, 100)]
     int _colums = 5;
 
-    [Header("必要なコンポーネント")]
-    [SerializeField,Tooltip("GridLayoutGroupコンポーネント")]
     GridLayoutGroup _gridLayoutGroup = null;
 
     [Header("プレハブ")]
@@ -30,6 +28,7 @@ public class LifeGameManager : MonoBehaviour
     
     void Init()
     {
+        //nullチェック
         if (!_gridLayoutGroup)
         {
             _gridLayoutGroup = GetComponent<GridLayoutGroup>();
@@ -51,7 +50,8 @@ public class LifeGameManager : MonoBehaviour
     void CreateField()
     {
         _cells = new Cell[_rows, _colums];　//セルの二次元配列の初期化
-        for (int r = 0;r<_rows;r++)
+
+        for (int r = 0;r<_rows;r++)//セルを生成して配列に代入
         {
             for (int c =0;c<_colums;c++)
             {
