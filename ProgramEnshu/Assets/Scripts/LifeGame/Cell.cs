@@ -9,7 +9,7 @@ namespace LifeGame
     [RequireComponent(typeof(Image))]
     public class Cell : MonoBehaviour, IPointerDownHandler
     {
-        bool _isAlive = true;
+        bool _isAlive = false;
         public bool IsAlive 
         {
             get { return _isAlive; }
@@ -34,6 +34,14 @@ namespace LifeGame
             if (!_image)
             {
                 _image = GetComponent<Image>();
+            }
+            if (_isAlive)
+            {
+                _image.color = Color.white;
+            }
+            else
+            {
+                _image.color = Color.black;
             }
         }
 

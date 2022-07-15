@@ -57,15 +57,15 @@ public class LifeGameManager : MonoBehaviour
             {
                 var cell = Instantiate(_cellPrefab, _gridLayoutGroup.transform);
 
-                int rand = Random.Range(0, 2); //ランダムに状態を初期化
-                if (rand == 0)
-                {
-                    cell.IsAlive = true;
-                }
-                else
-                {
-                    cell.IsAlive = false;
-                }
+                //int rand = Random.Range(0, 2); //ランダムに状態を初期化
+                //if (rand == 0)
+                //{
+                //    cell.IsAlive = true;
+                //}
+                //else
+                //{
+                //    cell.IsAlive = false;
+                //}
 
                 _cells[r, c] = cell;
             }
@@ -74,12 +74,11 @@ public class LifeGameManager : MonoBehaviour
 
     public void Alternation()
     {
-        foreach (var c in GetChangeCells())
+        foreach (var i in GetChangeCells())
         {
-            c.ChangeState();
+            i.ChangeState();
         }
     }
-
     Cell[] GetChangeCells()
     {
         List<Cell> tempCellList = new List<Cell>();//次の世代で状態が変わるセルを格納したリスト
@@ -87,11 +86,7 @@ public class LifeGameManager : MonoBehaviour
         {
             for (int c = 0; c < _colums; c++)
             {
-                if (CheckCell(r,c))
-                {
-                    Debug.Log($"縦：{r}　横：{c}");
-                    tempCellList.Add(_cells[r,c]);
-                }
+                CheckCell(r, c);
             }
         }
         Debug.Log(tempCellList.Count);
@@ -173,15 +168,15 @@ public class LifeGameManager : MonoBehaviour
         }
 
         //FIXME
-        if (livingCellCount ==3 && !_cells[r,c].IsAlive)
+        if (livingCellCount == 3 && !_cells[r, c].IsAlive)
         {
             return true;
         }
-        else if ((livingCellCount==3 ||livingCellCount==2)&& _cells[r, c].IsAlive)
+        else if ((livingCellCount == 3 || livingCellCount == 2) && _cells[r, c].IsAlive)
         {
             return false;
         }
-        else if(livingCellCount<=1 && _cells[r,c].IsAlive)
+        else if (livingCellCount <= 1 && _cells[r, c].IsAlive)
         {
             return true;
         }
@@ -192,3 +187,4 @@ public class LifeGameManager : MonoBehaviour
         return false;
     }
 }
+
