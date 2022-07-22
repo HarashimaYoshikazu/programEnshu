@@ -13,7 +13,17 @@ public class LifeGameManager : MonoBehaviour
     [SerializeField, Tooltip("セルの列数"), Range(1, 100)]
     int _colums = 5;
 
+    [SerializeField, Tooltip("自動化するかどうか")]
+    bool _isAuto = false;
+    [SerializeField, Tooltip("セルが切り替わる時間")]
+    float _timeLimit = 0.5f;
+    float _timer = 0f;
+
+    [SerializeField, Tooltip("初期化をランダムにするか")]
+    bool _isRandom = false;
+
     GridLayoutGroup _gridLayoutGroup = null;
+    
 
     [Header("プレハブ")]
     [SerializeField, Tooltip("Cellクラスを持ったセルのプレハブ")]
@@ -24,6 +34,25 @@ public class LifeGameManager : MonoBehaviour
     private void Awake()
     {
         Init();
+    }
+
+    private void Update()
+    {
+        if (_isAuto)
+        {
+            _timer += Time.deltaTime;
+            if (_timer>_timeLimit)
+            {
+                Alternation();
+                _timer = 0f;
+            }
+        }
+
+        if (_isRandom)
+        {
+            ResetCells();
+            _isRandom = false;
+        }
     }
 
     void Init()
@@ -49,29 +78,44 @@ public class LifeGameManager : MonoBehaviour
 
     void CreateField()
     {
-        _cells = new Cell[_rows, _colums];　//セルの二次元配列の初期化
-
-        for (int r = 0; r < _rows; r++)//セルを生成して配列に代入
+        _cells = new Cell[_rows, _colums]; //セルの二次元配列の初期化
+        for (int r = 0; r < _rows; r++)
         {
             for (int c = 0; c < _colums; c++)
             {
                 var cell = Instantiate(_cellPrefab, _gridLayoutGroup.transform);
-
-                //int rand = Random.Range(0, 2); //ランダムに状態を初期化
-                //if (rand == 0)
-                //{
-                //    cell.IsAlive = true;
-                //}
-                //else
-                //{
-                //    cell.IsAlive = false;
-                //}
-
                 _cells[r, c] = cell;
             }
         }
     }
 
+    void ResetCells()
+    {
+        for (int r = 0; r < _rows; r++)//セルを生成して配列に代入
+        {
+            for (int c = 0; c < _colums; c++)
+            {
+
+                if (_isRandom)
+                {
+                    var cell = _cells[r, c];
+                    int rand = Random.Range(0, 2); //ランダムに状態を初期化
+                    if (rand == 0)
+                    {
+                        cell.IsAlive = true;
+                    }
+                    else
+                    {
+                        cell.IsAlive = false;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 次の世代にする、ボタンを想定
+    /// </summary>
     public void Alternation()
     {
         foreach (var i in GetChangeCells())
@@ -79,6 +123,11 @@ public class LifeGameManager : MonoBehaviour
             i.ChangeState();
         }
     }
+
+    /// <summary>
+    /// 状態変化が起こるセル配列を返す
+    /// </summary>
+    /// <returns></returns>
     Cell[] GetChangeCells()
     {
         List<Cell> tempCellList = new List<Cell>();//次の世代で状態が変わるセルを格納したリスト
@@ -86,13 +135,20 @@ public class LifeGameManager : MonoBehaviour
         {
             for (int c = 0; c < _colums; c++)
             {
-                CheckCell(r, c);
+                if (CheckCell(r, c))
+                {
+                    tempCellList.Add(_cells[r, c]);
+                }               
             }
         }
         Debug.Log(tempCellList.Count);
         return tempCellList.ToArray();
     }
 
+
+    /// <summary>
+    /// セルがライフゲームの条件に当てはまるか判定する関数
+    /// </summary>
     bool CheckCell(int r, int c)
     {
         int livingCellCount = 0;
@@ -167,14 +223,9 @@ public class LifeGameManager : MonoBehaviour
             }
         }
 
-        //FIXME
         if (livingCellCount == 3 && !_cells[r, c].IsAlive)
         {
             return true;
-        }
-        else if ((livingCellCount == 3 || livingCellCount == 2) && _cells[r, c].IsAlive)
-        {
-            return false;
         }
         else if (livingCellCount <= 1 && _cells[r, c].IsAlive)
         {

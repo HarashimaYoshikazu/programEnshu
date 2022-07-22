@@ -533,8 +533,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412dc68b920d19e4787a4538cca49ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rows: 10
-  _colums: 10
+  _rows: 30
+  _colums: 30
+  _isAuto: 1
+  _timeLimit: 0.5
+  _isRandom: 1
   _cellPrefab: {fileID: 0}
 --- !u!114 &1391785870
 MonoBehaviour:
