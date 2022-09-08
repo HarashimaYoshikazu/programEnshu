@@ -12,17 +12,25 @@ public class ReverceManager : MonoBehaviour
 
     Cell[,] _cells;
 
+    private void Awake()
+    {
+        Init();
+    }
+
     private void Init()
     {
         _cells = new Cell[_colum, _row];
+        CreateField();
     }
     void CreateField()
     {
+        Cell cellPrefab = Resources.Load<Cell>("Reverce/Cell");
         for (int c = 0;c<_colum;c++)
         {
             for (int r = 0;r<_row;r++)
             {
-                //_cells[r,c] = 
+                var cell = Instantiate(cellPrefab,this.transform);
+                _cells[r, c] = cell;
             }
         }
     }
