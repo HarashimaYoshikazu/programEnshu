@@ -6,20 +6,24 @@ using UnityEngine.EventSystems;
 
 namespace Reverce
 {
-    public class Cell : MonoBehaviour,IPointerClickHandler
+    public class Cell : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
     {
+        ReverceManager _manager;
+
         [SerializeField]
         Image _piece;
 
         [SerializeField]
         CellState _currentCellState = CellState.None;
         public CellState GetCellState => _currentCellState;
+
         private void Awake()
         {
             if (!_piece)
             {
                 Debug.LogError("セルにコマが存在していません。");
             }
+            _manager = FindObjectOfType<ReverceManager>();
         }
         private void OnValidate()
         {
@@ -45,9 +49,11 @@ namespace Reverce
             switch (_currentCellState)
             {
                 case CellState.Black:
+                    _currentCellState = CellState.White;
                     _piece.color = Color.white;
                     break;
                 case CellState.White:
+                    _currentCellState = CellState.Black;
                     _piece.color = Color.black;
                     break;
             }
@@ -59,11 +65,27 @@ namespace Reverce
         public void ChangeCellState(CellState cellState)
         {
             _currentCellState = cellState;
+            switch (_currentCellState)
+            {
+                case CellState.Black:
+                    _piece.color = Color.black;
+                    break;
+                case CellState.White:
+                    _piece.color = Color.white;
+                    break;
+            }
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log(this.gameObject.name);
+            Debug.Log(_manager.GetCurrentTurnPlayer);
+            ChangeCellState(_manager.GetCurrentTurnPlayer);
+            _manager.NextTurn();
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            
         }
     }
     public enum CellState

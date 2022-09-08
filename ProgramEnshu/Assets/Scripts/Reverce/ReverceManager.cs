@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Reverce;
+using UnityEngine.EventSystems;
 
 public class ReverceManager : MonoBehaviour
 {
@@ -10,15 +11,22 @@ public class ReverceManager : MonoBehaviour
     [SerializeField]
     int _row = 8;
 
+    [SerializeField]
+    CellState _firstTurnPlayer;
+
     Cell[,] _cells;
 
+    CellState _curentTurnPlayer = CellState.Black;
+    public CellState GetCurrentTurnPlayer => _curentTurnPlayer;
+
     private void Awake()
-    {
+    {     
         Init();
     }
 
     private void Init()
     {
+        _curentTurnPlayer = _firstTurnPlayer;
         _cells = new Cell[_colum, _row];
         CreateField();
     }
@@ -33,5 +41,22 @@ public class ReverceManager : MonoBehaviour
                 _cells[r, c] = cell;
             }
         }
+    }
+    public void NextTurn()
+    {
+        switch (_curentTurnPlayer)
+        {
+            case CellState.Black:
+                _curentTurnPlayer = CellState.White;
+                break;
+            case CellState.White:
+                _curentTurnPlayer = CellState.Black;
+                break;
+            case CellState.None:
+                Debug.LogError("ïsê≥Ç»ílÇ≈Ç∑");
+                break;
+                
+        }
+
     }
 }
