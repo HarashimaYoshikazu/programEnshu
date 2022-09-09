@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace Reverce
+namespace Reversi
 {
     public class Cell : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
     {
-        ReverceManager _manager;
+        ReversiManager _manager;
 
         [SerializeField]
         Image _piece;
@@ -23,7 +23,7 @@ namespace Reverce
             {
                 Debug.LogError("セルにコマが存在していません。");
             }
-            _manager = FindObjectOfType<ReverceManager>();
+            _manager = FindObjectOfType<ReversiManager>();
         }
         private void OnValidate()
         {

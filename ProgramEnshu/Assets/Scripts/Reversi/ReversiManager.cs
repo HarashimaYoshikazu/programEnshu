@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Reverce;
+using Reversi;
 using UnityEngine.EventSystems;
 
-public class ReverceManager : MonoBehaviour
+public class ReversiManager : MonoBehaviour
 {
     [SerializeField]
     int _colum = 8;
